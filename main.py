@@ -4,14 +4,14 @@ import os
 import sys
 
 lsblk_output = subprocess.getoutput("lsblk -J")
-block_devices_connect = json.loads(lsblk_output)
+block_devices_connected = json.loads(lsblk_output)
 
 # TODO: Make this 2 functions into one and make make it recursive
 
 
 def get_names() -> list:
     names_of_drives = []
-    for drives in block_devices_connect.get("blockdevices", []):
+    for drives in block_devices_connected.get("blockdevices", []):
         if "name" in drives:
             names_of_drives.append((drives["name"]))
         if "children" in drives:
@@ -25,16 +25,19 @@ def get_names() -> list:
 
 
 def get_mount_points(selected_drive):
-    for drives in block_devices_connect.get("blockdevices", []):
-        if drives["name"] == selected_drive:
-            return drives["mountpoints"]
-        if "children" in drives:
-            for child in drives.get("children", []):
-                if child["name"] == selected_drive:
-                    return child["mountpoints"]
-                if "children" in child:
-                    for children in child.get("children", []):
-                        return children["mountpoints"]
+    for devices in block_devices_connected.get("blockdevices", []):
+        if devices["name"] == selected_drive:
+            print(devices["mountpoints"])
+        else:
+            if "children" in devices:
+                for children in devices.get("children", []):
+                    if children["name"] == selected_drive:
+                        print(children["mountpoints"])
+                    else:
+                        if "children" in children:
+                            for child in children.get("children", []):
+                                if child["name"] == selected_drive:
+                                    print(child["mountpoints"])
 
 
 # TODO: Make it so that only mounted drives show up
@@ -58,14 +61,6 @@ def list_files(drive_dir):
     for drive_dir, dirs, files in os.walk(drive_dir):
         if files:
             print(files)
-
-    # # print(len(raw_file_list))
-    # for i, j in raw_file_list:
-    #     nice_file_list[index] = raw_file_list[i][j]
-    #     index = index + 1
-
-    # print(nice_file_list)
-    # print(index)
 
 
 def main():
