@@ -27,17 +27,17 @@ def get_names() -> list:
 def get_mount_points(selected_drive):
     for devices in block_devices_connected.get("blockdevices", []):
         if devices["name"] == selected_drive:
-            print(devices["mountpoints"])
+            return devices["mountpoints"]
         else:
             if "children" in devices:
                 for children in devices.get("children", []):
                     if children["name"] == selected_drive:
-                        print(children["mountpoints"])
+                        return children["mountpoints"]
                     else:
                         if "children" in children:
                             for child in children.get("children", []):
                                 if child["name"] == selected_drive:
-                                    print(child["mountpoints"])
+                                    return child["mountpoints"]
 
 
 # TODO: Make it so that only mounted drives show up
