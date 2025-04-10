@@ -2,6 +2,7 @@ import subprocess
 import json
 import os
 import sys
+import hashlib
 
 lsblk_output = subprocess.getoutput("lsblk -J")
 block_devices_connected = json.loads(lsblk_output)
@@ -57,7 +58,6 @@ def get_selected(selected_from):
 def list_all_files(drive_dir: str) -> list:
     raw_file_list = []
     nice_file_list = []
-    index = 0
     for drive_dir, dirs, files in os.walk(drive_dir):
         # If is not a empty list then append it
         if files:
@@ -66,7 +66,6 @@ def list_all_files(drive_dir: str) -> list:
     for i in raw_file_list:
         for j in i:
             nice_file_list.append(j)
-            index = index + 1
 
     return nice_file_list
 
