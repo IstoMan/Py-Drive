@@ -54,13 +54,21 @@ def get_selected(selected_from):
         sys.exit(1)
 
 
-def list_files(drive_dir):
+def list_all_files(drive_dir: str) -> list:
     raw_file_list = []
     nice_file_list = []
     index = 0
     for drive_dir, dirs, files in os.walk(drive_dir):
+        # If is not a empty list then append it
         if files:
-            print(files)
+            raw_file_list.append(files)
+
+    for i in raw_file_list:
+        for j in i:
+            nice_file_list.append(j)
+            index = index + 1
+
+    return nice_file_list
 
 
 def main():
@@ -68,7 +76,7 @@ def main():
     selected_drive = get_selected(drives)
     mount_point = get_mount_points(selected_drive)
     selected_mount_point = get_selected(mount_point)
-    list_files(selected_mount_point)
+    every_damn_file = list_all_files(selected_mount_point)
 
 
 if __name__ == "__main__":
