@@ -20,8 +20,6 @@ def main():
     selected_mount_point = drive_operations.get_selected(mount_point)
     every_damn_file = drive_operations.get_all_files(selected_mount_point)
     every_files_hash = hash_gen_for_files(every_damn_file)
-    # print(len(every_damn_file))
-    # print(len(every_files_hash))
     for i in range(0, len(every_damn_file)):
         file = every_damn_file[i]
         hash = every_files_hash[i]
