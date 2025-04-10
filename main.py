@@ -1,15 +1,16 @@
-import hashlib
+import xxhash
 import drive_operations
+import hashlib
 
 
 def hash_gen_for_files(files: list) -> list:
     file_hash = []
-    hash_md5 = hashlib.md5()
+    xx = xxhash.xxh64()
     for file in files:
         with open(file, "rb") as f:
-            contents = f.read()
-            hash_md5.update(contents)
-            file_hash.append(hash_md5.hexdigest())
+            while chunk := f.read(8192):
+                xx.update(chunk)
+            file_hash.append(xx.hexdigest())
     return file_hash
 
 
@@ -23,7 +24,7 @@ def main():
     for i in range(0, len(every_damn_file)):
         file = every_damn_file[i]
         hash = every_files_hash[i]
-        print(f"{file} (MD5) hash: {hash}")
+        print(f"{file} (XXHASH) hash: {hash}")
 
 
 if __name__ == "__main__":
