@@ -54,7 +54,7 @@ def get_selected(selected_from):
         sys.exit(1)
 
 
-def list_all_files(drive_dir: str) -> list:
+def get_all_files(drive_dir: str) -> list:
     file_list = []
     for drive_dir, dirs, files in os.walk(drive_dir):
         if files:

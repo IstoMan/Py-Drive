@@ -1,5 +1,4 @@
 import hashlib
-from os import read
 import drive_operations
 
 
@@ -19,10 +18,10 @@ def main():
     selected_drive = drive_operations.get_selected(drives)
     mount_point = drive_operations.get_mount_points(selected_drive)
     selected_mount_point = drive_operations.get_selected(mount_point)
-    every_damn_file = drive_operations.list_all_files(selected_mount_point)
+    every_damn_file = drive_operations.get_all_files(selected_mount_point)
     every_files_hash = hash_gen_for_files(every_damn_file)
-    print(len(every_damn_file))
-    print(len(every_files_hash))
+    # print(len(every_damn_file))
+    # print(len(every_files_hash))
     for i in range(0, len(every_damn_file)):
         file = every_damn_file[i]
         hash = every_files_hash[i]
