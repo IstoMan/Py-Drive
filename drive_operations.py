@@ -55,15 +55,11 @@ def get_selected(selected_from):
 
 
 def list_all_files(drive_dir: str) -> list:
-    raw_file_list = []
-    nice_file_list = []
+    file_list = []
     for drive_dir, dirs, files in os.walk(drive_dir):
-        # If is not a empty list then append it
         if files:
-            raw_file_list.append(files)
+            for i in files:
+                full_path = os.path.join(drive_dir, i)
+                file_list.append(full_path)
 
-    for i in raw_file_list:
-        for j in i:
-            nice_file_list.append(j)
-
-    return nice_file_list
+    return file_list
