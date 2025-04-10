@@ -56,7 +56,7 @@ def get_selected(selected_from):
 
 def get_all_files(drive_dir: str) -> list:
     file_list = []
-    for drive_dir, dirs, files in os.walk(drive_dir):
+    for drive_dir, dirs, files in os.walk(drive_dir, followlinks=True):
         if files:
             for i in files:
                 full_path = os.path.join(drive_dir, i)
