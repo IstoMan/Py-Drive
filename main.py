@@ -5,7 +5,7 @@ import os
 CHUNK_SIZE = 65536
 
 mount_points = []
-files_of_dir = []
+hash_and_file = {}
 
 
 def hash_file(file):
@@ -38,4 +38,5 @@ for root, dirs, files in os.walk(root_dir):
         for i in files:
             file = os.path.join(root, i)
             if not os.path.islink(file):
-                files_of_dir.append(file)
+                hash = hash_file(file)
+                hash_and_file.update({file: hash})
