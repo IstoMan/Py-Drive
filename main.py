@@ -24,11 +24,11 @@ def get_mountpoins():
                 print(f"Please enter a number between 1 and {len(mount_points)}")
             else:
                 break
-        except ValueError:
-            print("Invalid input, enter a number")
         except KeyboardInterrupt:
             print("\nOperation cancelled by user.")
             sys.exit(0)
+        except ValueError:
+            print("Invalid input, enter a number")
 
     root_dir = mount_points[selected_mountpoint]
     print(f"You have selected {root_dir}")
