@@ -43,12 +43,12 @@ def get_mount_points(selected_drive):
 # TODO: Make it so that only mounted drives show up
 
 
-def get_selected(selected_from):
+def get_selected(selected_from, message, prompt):
     if len(selected_from) != 0:
-        print("󰝤󰝤󰝤󰝤󰝤󰝤 Select one 󰝤󰝤󰝤󰝤󰝤󰝤󰝤")
+        print(message)
         for i in range(0, len(selected_from)):
             print(f"{i + 1}. {selected_from[i]}")
-        selected = int(input("Enter only one number: ")) - 1
+        selected = int(input(prompt)) - 1
         return selected_from[selected]
     else:
         sys.exit(1)
@@ -56,10 +56,11 @@ def get_selected(selected_from):
 
 def get_all_files(drive_dir: str) -> list:
     file_list = []
-    for drive_dir, dirs, files in os.walk(drive_dir, followlinks=True):
+    for drive_dir, dirs, files in os.walk(drive_dir):
         if files:
             for i in files:
                 full_path = os.path.join(drive_dir, i)
-                file_list.append(full_path)
+                if not os.path.islink(full_path):
+                    file_list.append(full_path)
 
     return file_list
