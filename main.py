@@ -1,5 +1,4 @@
 import psutil
-import hashlib
 import os
 import collections
 import xxhash
