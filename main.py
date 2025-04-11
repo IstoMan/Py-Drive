@@ -20,8 +20,8 @@ print("Here are the connnect drives to your system: ")
 for disks in psutil.disk_partitions(all=False):
     mount_points.append(disks.mountpoint)
 
-for i in range(0, len(mount_points)):
-    print(f"{i + 1}. {mount_points[i]}")
+for i, mount_point in enumerate(mount_points, start=1):
+    print(f"{i}. {mount_point}")
 
 while True:
     try:
