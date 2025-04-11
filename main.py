@@ -1,17 +1,24 @@
-import xxhash
+from os import dup
 import drive_operations
 import hashlib
 
+CHUNK_SIZE = 65536  # Read files in 64kb chunks
 
-def hash_gen_for_files(files: list) -> list:
-    file_hash = []
-    xx = xxhash.xxh64()
-    for file in files:
-        with open(file, "rb") as f:
-            while chunk := f.read(8192):
-                xx.update(chunk)
-            file_hash.append(xx.hexdigest())
-    return file_hash
+
+def hash_file(filepath):
+    """Calculates the SHA256 hash of a file."""
+    hasher = hashlib.sha256()
+    try:
+        with open(filepath, "rb") as file:
+            while True:
+                chunk = file.read(CHUNK_SIZE)
+                if not chunk:
+                    break
+                hasher.update(chunk)
+        return hasher.hexdigest()
+    except IOError as e:
+        print(f"  Warning: Could not read file {filepath}: {e}")
+        return None
 
 
 def main():
