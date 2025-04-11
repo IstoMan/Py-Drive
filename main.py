@@ -121,16 +121,19 @@ def rename_or_delete(files: dict) -> None:
 
 def main():
     root_dir = get_mountpoins()
-    if os.listdir(root_dir):
-        hash_and_file = create_hash_table(root_dir)
-        duplicates = get_duplicates(hash_and_file)
-        for files in duplicates.values():
-            for i, file in enumerate(files, 1):
-                print(f"{i}. {file}")
-            rename_or_delete(files)
-            print("----------------")
-    else:
-        print("The drive is empty")
+    try:
+        if os.listdir(root_dir):
+            hash_and_file = create_hash_table(root_dir)
+            duplicates = get_duplicates(hash_and_file)
+            for files in duplicates.values():
+                for i, file in enumerate(files, 1):
+                    print(f"{i}. {file}")
+                rename_or_delete(files)
+                print("----------------")
+        else:
+            print("The drive is empty")
+    except PermissionError as e:
+        print(f"Permission denied: {e}")
 
 
 if __name__ == "__main__":
