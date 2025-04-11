@@ -1,4 +1,5 @@
 import psutil
+import sys
 import os
 import collections
 import xxhash
@@ -25,6 +26,9 @@ def get_mountpoins():
                 break
         except ValueError:
             print("Invalid input, enter a number")
+        except KeyboardInterrupt:
+            print("\nOperation cancelled by user.")
+            sys.exit(0)
 
     root_dir = mount_points[selected_mountpoint]
     print(f"You have selected {root_dir}")
@@ -95,6 +99,9 @@ def rename_or_delete(files: dict) -> None:
                 print("Renamed the files")
     elif choice == "s":
         pass
+        except KeyboardInterrupt:
+            print("\nOperation cancelled by user.")
+            sys.exit(0)
 
 
 def main():
