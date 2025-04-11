@@ -65,10 +65,9 @@ def get_duplicates(hashes_to_files: dict) -> dict:
 
 
 def rename_or_delete(files: dict) -> None:
+    options = ["d", "r", "s", "q"]
     while True:
         try:
-            choice: str = input("Enter d (Delete), r (Rename), s (Skip): ").lower()
-            if choice == "d" or choice == "r" or choice == "s":
             choice: str = input(
                 "Enter d (Delete), r (Rename), s (Skip) or q (quit): "
             ).lower()
@@ -78,41 +77,51 @@ def rename_or_delete(files: dict) -> None:
                 print("Enter valid input")
         except ValueError:
             print("Invalid input")
-
-    if choice == "d":
-        preserved_file = (
-            int(input("Enter the the file to be preserved, and rest will be deleted: "))
-            - 1
-        )
-        for i in range(0, len(files)):
-            if i == preserved_file:
-                pass
-            else:
-                os.remove(files[i])
-                print("Deleted the files")
-    elif choice == "r":
-        preserved_file = (
-            int(input("Enter the the file to be preserved, and rest will be renamed: "))
-            - 1
-        )
-        for i in range(0, len(files)):
-            if i == preserved_file:
-                pass
-            else:
-                os.rename(files[i], f"{files[i]}.bak")
-                print("Renamed the files")
-    elif choice == "s":
-        pass
         except KeyboardInterrupt:
             print("\nOperation cancelled by user.")
             sys.exit(0)
+    match choice:
+        case "d":
+            preserved_file = (
+                int(
+                    input(
+                        "Enter the the file to be preserved, and rest will be deleted: "
+                    )
+                )
+                - 1
+            )
+            for i in range(0, len(files)):
+                if i == preserved_file:
+                    pass
+                else:
+                    os.remove(files[i])
+                    print("Deleted the files")
+        case "r":
+            preserved_file = (
+                int(
+                    input(
+                        "Enter the the file to be preserved, and rest will be renamed: "
+                    )
+                )
+                - 1
+            )
+            for i in range(0, len(files)):
+                if i == preserved_file:
+                    pass
+                else:
+                    os.rename(files[i], f"{files[i]}.bak")
+                    print("Renamed the files")
+        case "s":
+            pass
+
         case "q":
             print("Exiting")
             sys.exit(1)
 
 
 def main():
-    root_dir = get_mountpoins()
+    # root_dir = get_mountpoins()
+    root_dir = "/home/chad/testdir"
     hash_and_file = create_hash_table(root_dir)
     duplicates = get_duplicates(hash_and_file)
     for files in duplicates.values():
