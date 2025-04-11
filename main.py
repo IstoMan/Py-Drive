@@ -1,7 +1,20 @@
 import psutil
+import hashlib
 import os
 
+CHUNK_SIZE = 65536
+
 mount_points = []
+files_of_dir = []
+
+
+def hash_file(file):
+    hasher = hashlib.sha256()
+    with open(file, "rb") as f:
+        content = f.read(CHUNK_SIZE)
+        hasher.update(content)
+    return hasher.hexdigest()
+
 
 print("Here are the connnect drives to your system: ")
 for disks in psutil.disk_partitions(all=False):
