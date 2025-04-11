@@ -27,7 +27,7 @@ def get_mountpoins():
             print("Invalid input, enter a number")
 
     root_dir = mount_points[selected_mountpoint]
-    print(f"How have selected {root_dir}")
+    print(f"You have selected {root_dir}")
     return root_dir
 
 
