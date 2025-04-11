@@ -60,25 +60,50 @@ def get_duplicates(hashes_to_files: dict) -> dict:
     return duplicated_dict
 
 
-def rename_or_delete(files: list) -> None:
+def rename_or_delete(files: dict) -> None:
     while True:
         try:
-            choice: str = input("Enter d (Delete), d (Backup): ")
+            choice: str = input("Enter d (Delete), r (Rename): ").lower()
+            if choice == "d" or choice == "r":
+                break
+            else:
+                print("Enter valid input")
         except ValueError:
             print("Invalid input")
-    # if choice == 'D':
-    #     chosen_file =
+
+    if choice == "d":
+        preserved_file = (
+            int(input("Enter the the file to be preserved, and rest will be deleted: "))
+            - 1
+        )
+        for i in range(0, len(files)):
+            if i == preserved_file:
+                pass
+            else:
+                os.remove(files[i])
+                print("Deleted the files")
+    elif choice == "r":
+        preserved_file = (
+            int(input("Enter the the file to be preserved, and rest will be renamed: "))
+            - 1
+        )
+        for i in range(0, len(files)):
+            if i == preserved_file:
+                pass
+            else:
+                os.rename(files[i], f"{files[i]}.bak")
+                print("Renamed the files")
 
 
 def main():
-    root_dir = get_mountpoins()
-    # root_dir = "/home/chad/testdir"
+    # root_dir = get_mountpoins()
+    root_dir = "/home/chad/testdir"
     hash_and_file = create_hash_table(root_dir)
     duplicates = get_duplicates(hash_and_file)
-
     for files in duplicates.values():
         for i, file in enumerate(files, 1):
             print(f"{i}. {file}")
+        rename_or_delete(files)
         print("----------------")
 
 
