@@ -19,7 +19,10 @@ def get_mountpoins():
     while True:
         try:
             selected_mountpoint: int = int(input("Enter your drive: ")) - 1
-            break
+            if selected_mountpoint < 0 or selected_mountpoint > len(mount_points):
+                print(f"Please enter a number between 1 and {len(mount_points)}")
+            else:
+                break
         except ValueError:
             print("Invalid input, enter a number")
 
@@ -57,8 +60,19 @@ def get_duplicates(hashes_to_files: dict) -> dict:
     return duplicated_dict
 
 
+def rename_or_delete(files: list) -> None:
+    while True:
+        try:
+            choice: str = input("Enter d (Delete), d (Backup): ")
+        except ValueError:
+            print("Invalid input")
+    # if choice == 'D':
+    #     chosen_file =
+
+
 def main():
     root_dir = get_mountpoins()
+    # root_dir = "/home/chad/testdir"
     hash_and_file = create_hash_table(root_dir)
     duplicates = get_duplicates(hash_and_file)
 
