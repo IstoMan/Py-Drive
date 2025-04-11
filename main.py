@@ -69,6 +69,10 @@ def rename_or_delete(files: dict) -> None:
         try:
             choice: str = input("Enter d (Delete), r (Rename), s (Skip): ").lower()
             if choice == "d" or choice == "r" or choice == "s":
+            choice: str = input(
+                "Enter d (Delete), r (Rename), s (Skip) or q (quit): "
+            ).lower()
+            if choice in options:
                 break
             else:
                 print("Enter valid input")
@@ -102,6 +106,9 @@ def rename_or_delete(files: dict) -> None:
         except KeyboardInterrupt:
             print("\nOperation cancelled by user.")
             sys.exit(0)
+        case "q":
+            print("Exiting")
+            sys.exit(1)
 
 
 def main():
