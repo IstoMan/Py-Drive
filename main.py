@@ -34,4 +34,8 @@ root_dir = mount_points[selected_mountpoint]
 print(f"How have selected {root_dir}")
 
 for root, dirs, files in os.walk(root_dir):
-    print(files)
+    if files:
+        for i in files:
+            file = os.path.join(root, i)
+            if not os.path.islink(file):
+                files_of_dir.append(file)
