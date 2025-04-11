@@ -5,7 +5,7 @@ import os
 CHUNK_SIZE = 65536
 
 
-def hash_file(file):
+def hash_file(file: str) -> str:
     hasher = hashlib.sha256()
     with open(file, "rb") as f:
         content = f.read(CHUNK_SIZE)
@@ -13,7 +13,7 @@ def hash_file(file):
     return hasher.hexdigest()
 
 
-def create_hash_table(root_dir):
+def create_hash_table(root_dir: str) -> dict:
     hash_and_file = {}
     for root, dirs, files in os.walk(root_dir):
         if files:
@@ -36,7 +36,7 @@ def main():
 
     while True:
         try:
-            selected_mountpoint = int(input("Enter your drive: ")) - 1
+            selected_mountpoint: int = int(input("Enter your drive: ")) - 1
             break
         except ValueError:
             print("Invalid input, enter a number")
