@@ -2,6 +2,7 @@ import psutil
 import hashlib
 import os
 import collections
+import xxhash
 
 
 CHUNK_SIZE = 65536
@@ -29,7 +30,7 @@ def get_mountpoins():
 
 
 def hash_file(file: str) -> str:
-    hasher = hashlib.sha256()
+    hasher = xxhash.xxh64()
     with open(file, "rb") as f:
         content = f.read(CHUNK_SIZE)
         hasher.update(content)
