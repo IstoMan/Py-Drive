@@ -63,8 +63,8 @@ def get_duplicates(hashes_to_files: dict) -> dict:
 def rename_or_delete(files: dict) -> None:
     while True:
         try:
-            choice: str = input("Enter d (Delete), r (Rename): ").lower()
-            if choice == "d" or choice == "r":
+            choice: str = input("Enter d (Delete), r (Rename), s (Skip): ").lower()
+            if choice == "d" or choice == "r" or choice == "s":
                 break
             else:
                 print("Enter valid input")
@@ -93,10 +93,13 @@ def rename_or_delete(files: dict) -> None:
             else:
                 os.rename(files[i], f"{files[i]}.bak")
                 print("Renamed the files")
+    elif choice == "s":
+        pass
 
 
 def main():
-    root_dir = get_mountpoins()
+    # root_dir = get_mountpoins()
+    root_dir = "/home/chad/testdir"
     hash_and_file = create_hash_table(root_dir)
     duplicates = get_duplicates(hash_and_file)
     for files in duplicates.values():
