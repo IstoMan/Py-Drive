@@ -21,17 +21,26 @@ def hash_file(filepath):
         return None
 
 
+
 def main():
     drives = drive_operations.get_names()
-    selected_drive = drive_operations.get_selected(drives)
+    selected_drive = drive_operations.get_selected(
+        drives, "󰝤󰝤󰝤󰝤󰝤󰝤 Drives connected to the system 󰝤󰝤󰝤󰝤󰝤󰝤󰝤", "Select your drive: "
+    )
     mount_point = drive_operations.get_mount_points(selected_drive)
-    selected_mount_point = drive_operations.get_selected(mount_point)
+    selected_mount_point = drive_operations.get_selected(
+        mount_point,
+        "󰝤󰝤󰝤󰝤󰝤󰝤 Mount points for your drive 󰝤󰝤󰝤󰝤󰝤󰝤󰝤",
+        "Select a mountpoint: ",
+    )
     every_damn_file = drive_operations.get_all_files(selected_mount_point)
-    every_files_hash = hash_gen_for_files(every_damn_file)
+    every_files_hash = []
+    for file in every_damn_file:
+        every_files_hash.append(hash_file(file))
+
+    files_with_hash = {}
     for i in range(0, len(every_damn_file)):
-        file = every_damn_file[i]
-        hash = every_files_hash[i]
-        print(f"{file} (XXHASH) hash: {hash}")
+        files_with_hash.update({every_files_hash[i]: every_damn_file[i]})
 
 
 if __name__ == "__main__":
