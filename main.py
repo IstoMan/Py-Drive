@@ -8,7 +8,7 @@ import xxhash
 CHUNK_SIZE = 65536
 
 
-def get_mountpoins():
+def get_mountpoints():
     mount_points = []
     print("Here are the connnect drives to your system: ")
     for disks in psutil.disk_partitions(all=False):
@@ -120,7 +120,7 @@ def rename_or_delete(files: dict) -> None:
 
 
 def main():
-    root_dir = get_mountpoins()
+    root_dir = get_mountpoints()
     try:
         if os.listdir(root_dir):
             hash_and_file = create_hash_table(root_dir)
