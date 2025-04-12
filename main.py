@@ -82,35 +82,57 @@ def rename_or_delete(files: dict) -> None:
             sys.exit(0)
     match choice:
         case "d":
-            preserved_file = (
-                int(
-                    input(
-                        "Enter the the file to be preserved, and rest will be deleted: "
+            while True:
+                try:
+                    preserved_file = (
+                        int(
+                            input(
+                                "Enter the the file to be preserved, and rest will be deleted: "
+                            )
+                        )
+                        - 1
                     )
-                )
-                - 1
-            )
-            for i in range(0, len(files)):
-                if i == preserved_file:
-                    pass
-                else:
-                    os.remove(files[i])
-                    print("Deleted the files")
+                    if preserved_file < 0 or preserved_file > len(files):
+                        print(f"Please enter a number between 1 and {len(files)}")
+                    else:
+                        break
+                    for i in range(0, len(files)):
+                        if i == preserved_file:
+                            pass
+                        else:
+                            os.remove(files[i])
+                            print("Deleted the files")
+                except ValueError:
+                    print("Invalid input")
+                except KeyboardInterrupt:
+                    print("\nOperation cancelled by user.")
+                    sys.exit(0)
         case "r":
-            preserved_file = (
-                int(
-                    input(
-                        "Enter the the file to be preserved, and rest will be renamed: "
+            while True:
+                try:
+                    preserved_file = (
+                        int(
+                            input(
+                                "Enter the the file to be preserved, and rest will be renamed: "
+                            )
+                        )
+                        - 1
                     )
-                )
-                - 1
-            )
-            for i in range(0, len(files)):
-                if i == preserved_file:
-                    pass
-                else:
-                    os.rename(files[i], f"{files[i]}.bak")
-                    print("Renamed the files")
+                    if preserved_file < 0 or preserved_file > len(files):
+                        print(f"Please enter a number between 1 and {len(files)}")
+                    else:
+                        break
+                    for i in range(0, len(files)):
+                        if i == preserved_file:
+                            pass
+                        else:
+                            os.rename(files[i], f"{files[i]}.bak")
+                            print("Renamed the files")
+                except ValueError:
+                    print("Invalid input")
+                except KeyboardInterrupt:
+                    print("\nOperation cancelled by user.")
+                    sys.exit(0)
         case "s":
             pass
 
